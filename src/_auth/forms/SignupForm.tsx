@@ -17,6 +17,7 @@ import { signupValidation } from '@/lib/validation';
 import Loader from '@/components/shared/Loader';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { createUserAccount } from '@/lib/appwrite/api';
 
 const SignupForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,8 +32,15 @@ const SignupForm = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof signupValidation>) => {
-    // const newUser = await createUserAccount(values)
+  const onSubmit = async (user: z.infer<typeof signupValidation>) => {
+    try {
+      setIsLoading(true);
+      const newUser = await createUserAccount(user);
+    } catch (error: any) {
+      throw new Error(`Could not create new account: ${error.message}`);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
