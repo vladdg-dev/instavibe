@@ -14,7 +14,7 @@ Explore the world of social media with my user-friendly platform that combines a
 
 ## Features 🔋
 
-Experience the full spectrum of social media features with our Instagram Clone:
+Experience the full spectrum of social media features with this Instagram Clone:
 
 - **Authentication System**: Enjoy a robust authentication system that prioritizes security and user privacy.
 - **Explore Page**: Discover new content on the explore page, featuring a curated selection of posts from top creators.
