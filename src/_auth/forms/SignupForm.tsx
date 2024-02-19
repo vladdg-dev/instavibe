@@ -18,8 +18,11 @@ import Loader from '@/components/shared/Loader';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createUserAccount } from '@/lib/appwrite/api';
+import { useToast } from '@/components/ui/use-toast';
 
 const SignupForm = () => {
+  const { toast } = useToast();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof signupValidation>>({
@@ -36,6 +39,12 @@ const SignupForm = () => {
     try {
       setIsLoading(true);
       const newUser = await createUserAccount(user);
+      if (!newUser)
+        toast({
+          title: 'Sign up failed. Please try again.',
+        });
+
+      // const session = await signInAccount()
     } catch (error: any) {
       throw new Error(`Could not create new account: ${error.message}`);
     } finally {
