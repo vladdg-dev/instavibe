@@ -1,4 +1,5 @@
 export type INavLink = {
+  id: string;
   imgURL: string;
   route: string;
   label: string;

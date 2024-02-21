@@ -77,3 +77,11 @@ export const getCurrentUser = async () => {
     throw new Error(`Could not get current user: ${error.message}`);
   }
 };
+
+export const signOutAccount = async () => {
+  try {
+    return await account.deleteSession('current');
+  } catch (error: any) {
+    throw new Error(`Could not sing out: ${error.message}`);
+  }
+};
