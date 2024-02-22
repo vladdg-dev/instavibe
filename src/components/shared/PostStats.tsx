@@ -29,8 +29,8 @@ const PostStats: React.FC<{ post: Models.Document; userId: string }> = ({
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    setIsSaved(saved => !saved);
-  }, []);
+    setIsSaved(!!savedPostRecord);
+  }, [currentUser]);
 
   const handleLikePost = (event: React.MouseEvent) => {
     event.stopPropagation();
