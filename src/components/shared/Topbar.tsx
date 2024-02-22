@@ -11,7 +11,7 @@ const Topbar = () => {
 
   useEffect(() => {
     if (isSuccess) navigate(0);
-  }, [isSuccess]);
+  }, [isSuccess, navigate]);
 
   return (
     <section className="topbar">
@@ -36,7 +36,7 @@ const Topbar = () => {
           <Link to={`/profile/${user.id}`} className="flex-center gap-3">
             <img
               src={user.imageUrl || '/assets/images/profile-placeholder.svg'}
-              alt="profile picture"
+              alt="profile"
               className="h-8 w-8 rounded-full"
             />
           </Link>

@@ -3,7 +3,7 @@ import { FileWithPath, useDropzone } from 'react-dropzone';
 import { Button } from '../ui/button';
 
 const FileUploader: React.FC<{
-  fieldChange: (files: File[]) => void;
+  fieldChange: (_files: File[]) => void;
   mediaUrl: string;
 }> = ({ fieldChange, mediaUrl }) => {
   const [file, setFile] = useState<File[]>([]);
@@ -15,6 +15,7 @@ const FileUploader: React.FC<{
       fieldChange(acceptedFiles);
       setFileUrl(URL.createObjectURL(acceptedFiles[0]));
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [file]
   );
 
@@ -34,7 +35,7 @@ const FileUploader: React.FC<{
       {fileUrl ? (
         <>
           <div className="flex flex-1 justify-center w-full p-5 lg:p-10">
-            <img src={fileUrl} alt="image" className="file_uploader-img" />
+            <img src={fileUrl} alt="icon" className="file_uploader-img" />
           </div>
           <p className="file_uploader-label">Click or drag photo to replace</p>
         </>

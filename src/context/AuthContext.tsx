@@ -41,6 +41,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       checkAuthUser();
       navigate('/');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkAuthUser = async () => {

@@ -58,7 +58,7 @@ const PostCard: React.FC<{ post: Models.Document }> = ({ post }) => {
         </div>
         <img
           src={post.imageUrl || 'assets/icons/profile-placeholder.svg'}
-          alt="post image"
+          alt="post"
           className="post-card_img"
         />
       </Link>
