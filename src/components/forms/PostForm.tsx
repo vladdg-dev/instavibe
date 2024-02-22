@@ -16,14 +16,24 @@ import { Textarea } from '../ui/textarea';
 import FileUploader from '../shared/FileUploader';
 import { postValidation } from '@/lib/validation';
 import { Models } from 'appwrite';
-import { useCreatePost } from '@/lib/react-query/queriesAndMutations';
+import {
+  useCreatePost,
+  useUpdatePost,
+} from '@/lib/react-query/queriesAndMutations';
 import { useUserContext } from '@/context/AuthContext';
 import { toast } from '../ui/use-toast';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../shared/Loader';
 
-const PostForm: React.FC<{ post?: Models.Document }> = ({ post }) => {
+const PostForm: React.FC<{
+  post?: Models.Document;
+  action: 'Create' | 'Update';
+}> = ({ post, action }) => {
   const { mutateAsync: createPost, isPending: isLoadingCreate } =
     useCreatePost();
+  const { mutateAsync: updatePost, isPending: isLoadingUpdate } =
+    useUpdatePost();
+
   const { user } = useUserContext();
   const navigate = useNavigate();
 
@@ -38,6 +48,18 @@ const PostForm: React.FC<{ post?: Models.Document }> = ({ post }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof postValidation>) => {
+    if (post && action === 'Update') {
+      const updatedPost = await updatePost({
+        ...values,
+        postId: post.$id,
+        imageId: post?.imageId,
+        imageUrl: post?.imageUrl,
+      });
+      if (!updatedPost) {
+        toast({ title: 'Something went wrong. Please try again.' });
+      }
+      return navigate(`/posts/${post.$id}`);
+    }
     const newPost = await createPost({
       ...values,
       userId: user.id,
@@ -133,8 +155,19 @@ const PostForm: React.FC<{ post?: Models.Document }> = ({ post }) => {
           <Button
             type="submit"
             className="shad-button_primary whitespace-nowrap"
+            disabled={isLoadingCreate || isLoadingUpdate}
           >
-            Submit
+            {isLoadingCreate ||
+              (isLoadingUpdate ? (
+                <>
+                  <Loader />
+                  Loading...
+                </>
+              ) : action === 'Create' ? (
+                'Create'
+              ) : (
+                'Update'
+              ))}
           </Button>
         </div>
       </form>
