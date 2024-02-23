@@ -174,12 +174,13 @@ export const useGetPosts = () => {
   return useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
     queryFn: getInfinitePosts,
-    getNextPageParam: lastPage => {
+    initialPageParam: undefined,
+    getNextPageParam: (lastPage: any) => {
       if (lastPage && lastPage.documents.length === 0) return null;
-      return lastPage.documents[lastPage.documents.length - 1].$id;
+      return lastPage?.documents[lastPage.documents.length - 1].$id;
     },
   });
-};
+}
 
 export const useSearchPosts = (searchTerm: string) => {
   return useQuery({
