@@ -13,6 +13,7 @@ import {
   getInfinitePosts,
   getPostById,
   getRecentPosts,
+  getUsers,
   likePost,
   savePost,
   searchPosts,
@@ -180,12 +181,19 @@ export const useGetPosts = () => {
       return lastPage?.documents[lastPage.documents.length - 1].$id;
     },
   });
-}
+};
 
 export const useSearchPosts = (searchTerm: string) => {
   return useQuery({
     queryKey: [QUERY_KEYS.SEARCH_POSTS, searchTerm],
     queryFn: () => searchPosts(searchTerm),
     enabled: !!searchTerm,
+  });
+};
+
+export const useGetUsers = (limit: number) => {
+  return useQuery({
+    queryKey: ['getUsers'],
+    queryFn: () => getUsers(limit),
   });
 };

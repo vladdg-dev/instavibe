@@ -325,3 +325,16 @@ export const searchPosts = async (searchTerm: string) => {
     throw new Error(`Could not get infinite posts: ${error.message}`);
   }
 };
+
+export const getUsers = async (limit: number) => {
+  try {
+    const users = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.orderDesc('$createdAt'), Query.limit(limit)]
+    );
+    return users;
+  } catch (error: any) {
+    throw new Error(`Could not fetch Users: ${error.message}`);
+  }
+};
